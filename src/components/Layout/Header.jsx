@@ -2,11 +2,11 @@ import classes from './Header.module.css';
 import mealsImage from '../../assets/meals.jpeg';
 import HeaderCartButton from './HeaderCartButton';
 
-function Header(props) {
+function Header({onShowCart}) {
     return (<>
         <header className={classes.header}>
             <h1>Nate Dawg's</h1>
-            <HeaderCartButton/>
+            <HeaderCartButton onClick={onShowCart}/>
         </header>
         <div className={classes['main-image']}>
             <img src={mealsImage}
