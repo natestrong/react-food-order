@@ -6,7 +6,23 @@ const defaultCart = {items: []};
 const cartReducer = (state, action) => {
     switch (action.type) {
         case 'ADD': {
-            const updatedItems = state.items.concat(action.item);
+            const index = state.items.findIndex(item => item.id === action.item.id);
+            let updatedItems = [...state.items];
+            if (index > -1) {
+                updatedItems[index].amount++;
+            } else {
+                updatedItems.push(action.item);
+            }
+            return {items: updatedItems};
+        }
+        case 'REMOVE': {
+            const index = state.items.findIndex(item => item.id === action.id);
+            let updatedItems = [...state.items];
+            if (updatedItems[index].amount <= 1) {
+                updatedItems.splice(index, 1);
+            } else {
+                updatedItems[index].amount--;
+            }
             return {items: updatedItems};
         }
         default: {
@@ -25,6 +41,12 @@ export default function CartProvider({children}) {
             return this.items.reduce((acc, item) => {
                 return acc + (item.amount * item.price);
             }, 0);
+        },
+        get amountUSD() {
+            return new Intl.NumberFormat(
+                'en-US',
+                {style: 'currency', currency: 'USD'}
+            ).format(this.amount);
         },
         get numberOfItems() {
             return this.items.reduce((acc, item) => {

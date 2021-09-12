@@ -1,12 +1,23 @@
 import classes from './Cart.module.css';
 import Modal from '../UI/Modal';
+import CartContext from '../../store/cart-context';
+import {useContext} from 'react';
+import CartItem from './CartItem';
 
 export default function Cart({onClose}) {
+    const cartContext = useContext(CartContext);
+
+    console.log(cartContext.items);
+
     const cartItems = <ul className={classes['cart-items']}>
-        {[
-            {id: 'c1', name: 'Sushi', amount: 2, price: 12.99},
-            {id: 'c2', name: 'Pizza', amount: 1, price: 15.99},
-        ].map(item => <li key={item.id}>{item.name}</li>)}
+        {cartContext.items.map(item => (
+            <CartItem key={item.id}
+                      name={item.name}
+                      amount={item.amount}
+                      price={item.price}
+                      onRemove={cartContext.removeItem.bind(null, item.id)}
+                      onAdd={cartContext.addItem.bind(null, item)}/>
+        ))}
     </ul>;
 
     return <Modal onClose={onClose}>
@@ -14,7 +25,7 @@ export default function Cart({onClose}) {
 
         <div className={classes.total}>
             <span>Total Amount</span>
-            <span>35.62</span>
+            <span>{cartContext.amountUSD}</span>
         </div>
 
         <div className={classes.actions}>
@@ -22,7 +33,9 @@ export default function Cart({onClose}) {
                     onClick={onClose}>
                 Close
             </button>
-            <button className={classes.button}>Order</button>
+            <button disabled={cartContext.items.length === 0}
+                    className={classes.button}>Order
+            </button>
         </div>
     </Modal>;
 }

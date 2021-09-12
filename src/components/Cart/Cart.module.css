@@ -44,3 +44,9 @@
     background-color: #8a2b06;
     color: white;
 }
+
+.actions .button:disabled {
+    background: #969696;
+    border-color: unset;
+    cursor: not-allowed;
+}
