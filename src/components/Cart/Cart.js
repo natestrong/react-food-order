@@ -16,7 +16,7 @@ export default function Cart({onClose}) {
                       amount={item.amount}
                       price={item.price}
                       onRemove={cartContext.removeItem.bind(null, item.id)}
-                      onAdd={cartContext.addItem.bind(null, item)}/>
+                      onAdd={cartContext.addItem.bind(null, {...item, amount: 1})}/>
         ))}
     </ul>;
 
