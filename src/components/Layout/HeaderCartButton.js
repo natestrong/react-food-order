@@ -6,8 +6,6 @@ import CartContext from '../../store/cart-context';
 function HeaderCartButton({onClick}) {
     const cartContext = useContext(CartContext);
 
-    console.log(cartContext);
-
     return (<>
         <button className={classes.button}
                 onClick={onClick}>

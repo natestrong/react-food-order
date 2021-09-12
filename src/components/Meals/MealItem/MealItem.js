@@ -1,11 +1,24 @@
 import classes from './MealItem.module.css';
 import MealItemForm from './MealItemForm';
+import {useContext} from 'react';
+import CartContext from '../../../store/cart-context';
 
 export default function MealItem(props) {
+    const cartContext = useContext(CartContext);
+
     const price = new Intl.NumberFormat(
         'en-US',
         {style: 'currency', currency: 'USD'}
     ).format(props.price);
+
+    const addToCartHandler = amount => {
+        cartContext.addItem({
+            id: props.id,
+            name: props.name,
+            amount: amount,
+            price: props.price
+        });
+    };
 
     return (
         <li className={classes.meal}>
@@ -16,7 +29,8 @@ export default function MealItem(props) {
             </div>
 
             <div>
-                <MealItemForm id={props.id}/>
+                <MealItemForm onAddToCart={addToCartHandler}
+                              id={props.id}/>
             </div>
         </li>
     );
