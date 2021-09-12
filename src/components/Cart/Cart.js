@@ -6,7 +6,7 @@ export default function Cart({onClose}) {
         {[
             {id: 'c1', name: 'Sushi', amount: 2, price: 12.99},
             {id: 'c2', name: 'Pizza', amount: 1, price: 15.99},
-        ].map(item => <li>{item.name}</li>)}
+        ].map(item => <li key={item.id}>{item.name}</li>)}
     </ul>;
 
     return <Modal onClose={onClose}>

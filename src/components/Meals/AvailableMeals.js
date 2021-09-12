@@ -32,7 +32,7 @@ const DUMMY_MEALS = [
 
 function AvailableMeals() {
     const mealsList = DUMMY_MEALS.map(meal => (
-        <MealItem {...meal}/>
+        <MealItem {...meal} key={meal.id}/>
     ));
 
     return (
